@@ -1,6 +1,17 @@
 import {ServerInfo} from "apollo-server";
+import {connect} from "mongoose";
+import {config} from "./constants/config";
 
 const {ApolloServer, gql} = require('apollo-server');
+
+const dbName = 'testDb'
+const mongoUri = `${config.mongoBaseUrl}/${dbName}`
+connect(mongoUri, {
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
+    // useFindAndModify: false,
+    // useCreateIndex: true
+}).then(() => console.log('Connected to mongoDB'))
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against

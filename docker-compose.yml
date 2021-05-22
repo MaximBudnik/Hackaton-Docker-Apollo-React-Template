@@ -16,6 +16,10 @@ services:
     ports:
       - '4000:4000'
     command: npm run dev
+    links:
+      - mongo
+    depends_on:
+      - mongo
   react-client:
     build:
       network: host
@@ -28,9 +32,18 @@ services:
     volumes:
       - ./client:/app
       - /app/node_modules
+    container_name: react-client
     expose:
       - '3000'
     ports:
       - '3000:3000'
     command: yarn start
-
+  mongo:
+    image: mongo
+    container_name: mongo
+    volumes:
+      - mongodb:/data/db
+    ports:
+      - '27017:27017'
+volumes:
+  mongodb:
