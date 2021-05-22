@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  node-server:
+  node-server-with-git:
     build:
       network: host
       context: server
@@ -10,7 +10,7 @@ services:
     volumes:
       - ./server/src:/home/node/app/src
       - ./server/nodemon.json:/home/node/app/nodemon.json
-    container_name: node-server
+    container_name: node-server-with-git
     expose:
       - '4000'
     ports:
