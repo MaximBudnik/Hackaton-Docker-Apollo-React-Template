@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  node-server:
+    build:
+      network: host
+      context: server
+      dockerfile: Dockerfile
+      target: base
+    volumes:
+      - ./server/src:/home/node/app/src
+      - ./server/nodemon.json:/home/node/app/nodemon.json
+    container_name: node-server
+    expose:
+      - '4000'
+    ports:
+      - '4000:4000'
+    command: npm run dev
+  react-client:
+    build:
+      network: host
+      context: client
+      dockerfile: Dockerfile
+      target: base
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    expose:
+      - '3000'
+    ports:
+      - '3000:3000'
+    command: yarn start
+
